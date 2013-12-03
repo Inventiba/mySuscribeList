@@ -5,33 +5,33 @@ var port = 27017;
 var host = 'localhost';
 var name = 'mySuscribe';
 
-var subscriptor = {};
+var subscriber = {};
 
-subscriptor.db = new dataBase (name, new server(host, port, {auto_reconnect: true},{}));
-subscriptor.db.open(function(e,d) {
+subscriber.db = new dataBase (name, new server(host, port, {auto_reconnect: true},{}));
+subscriber.db.open(function(e,d) {
 	if(e) {
 		console.log(e)
 	} else {
-		console.log('Conectado a la base de datos: ' + name);
+		console.log('Connected to database: ' + name);
 	}
 });
 
-subscriptor.subscriptors = subscriptor.db.collection('subscriptors');
+subscriber.subscribers = subscriber.db.collection('subscribers');
 
-module.exports = subscriptor;
+module.exports = subscriber;
 
-subscriptor.new = function(newData, callback) {
-	subscriptor.subscriptors.findOne({email: newData.email}, function(e,obj) {
+subscriber.new = function Insert(newData, callback) {
+	subscriber.subscribers.findOne({email: newData.email}, function(e,obj) {
 		if(obj) {
-			callback('Ese email ya existe.');
+			callback('Email already exist.');
 		} else {
-			subscriptor.subscriptors.insert(newData, callback(null))
+			subscriber.subscribers.insert(newData, callback(null))
 		}
 	})
 }
 
-subscriptor.list = function(callback) {
-	subscriptor.subscriptors.find().toArray(function(e,res){
+subscriber.list = function Show(callback) {
+	subscriber.subscribers.find().toArray(function(e,res) {
 		if(e) {
 			callback(e)
 		} else {
@@ -40,19 +40,19 @@ subscriptor.list = function(callback) {
 	})
 }
 
-subscriptor.edit = function(newData, callback) {
-	subscriptor.subscriptors.findOne({_id: this.getObjectId(newData.id)}, function(e,o) {
+subscriber.edit = function Update(newData, callback) {
+	subscriber.subscribers.findOne({_id: this.getObjectId(newData.id)}, function(e,o) {
 		o.name = newData.name;
 		o.email = newData.email;
-		subscriptor.subscriptors.save(o);
+		subscriber.subscribers.save(o);
 		callback(o);
 	})
 }
 
-subscriptor.delete = function(id, callback) {
-	subscriptor.subscriptors.remove({_id: this.getObjectId(id)},callback)
+subscriber.delete = function Erase(id, callback) {
+	subscriber.subscribers.remove({_id: this.getObjectId(id)},callback)
 }
 
-subscriptor.getObjectId = function(id) {
-	return subscriptor.subscriptors.db.bson_serializer.ObjectID.createFromHexString(id)
+subscriber.getObjectId = function GetId(id) {
+	return subscriber.subscribers.db.bson_serializer.ObjectID.createFromHexString(id)
 }
