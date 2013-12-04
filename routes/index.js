@@ -23,7 +23,7 @@ module.exports = function(app) {
             if(objeto) {
                 response.redirect('/');
             } else {
-                response.send('update field fail', 400);
+                response.send('update fail', 400);
             }
         });
     });
