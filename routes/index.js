@@ -17,8 +17,8 @@ module.exports = function(app) {
 	})
 
 	app.post('/save', function(request,response) {
-		var string= {name: request.param('name'), email:request.param('email'), id:request.param('id')};
-		subscriberModule.edit(string, function(e) {
+		var fields= {name: request.param('name'), email:request.param('email'), id:request.param('id')};
+		subscriberModule.edit(fields, function(e) {
 			if(e) {
 				response.redirect('/');
 			} else {
