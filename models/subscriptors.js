@@ -10,7 +10,7 @@ var subscriber = {};
 subscriber.db = new dataBase (name, new server(host, port, {auto_reconnect: true},{}));
 subscriber.db.open(function(e,d) {
     if(e) {
-        console.log(e)
+        console.log(e);
     } else {
         console.log('Connected to database: ' + name);
     }
@@ -27,17 +27,17 @@ subscriber.new = function Insert(newData, callBack) {
         } else {
             subscriber.subscribers.insert(newData, callBack(null))
         }
-    })
+    });
 }
 
 subscriber.list = function Show(callBack) {
     subscriber.subscribers.find().toArray(function(e,res) {
         if(e) {
-            callBack(e)
+            callBack(e);
         } else {
-            callBack(null, res)
+            callBack(null, res);
         }
-    })
+    });
 }
 
 subscriber.edit = function Update(newData, callback) {
@@ -46,7 +46,7 @@ subscriber.edit = function Update(newData, callback) {
         o.email = newData.email;
         subscriber.subscribers.save(o);
         callback(o);
-    })
+    });
 }
 
 subscriber.delete = function Erase(id, callback) {
@@ -54,5 +54,5 @@ subscriber.delete = function Erase(id, callback) {
 }
 
 subscriber.getObjectId = function GetId(id) {
-    return subscriber.subscribers.db.bson_serializer.ObjectID.createFromHexString(id)
+    return subscriber.subscribers.db.bson_serializer.ObjectID.createFromHexString(id);
 }
