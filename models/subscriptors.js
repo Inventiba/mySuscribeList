@@ -7,9 +7,9 @@ var name = 'mySuscribe';
 
 var subscriber = {};
 
-subscriber.db = new dataBase (name, new server(host, port, {auto_reconnect: true},{}));
+subscriber.db = new dataBase (name, new server(host, port, {auto_reconnect: true}, {} ));
 subscriber.db.open(function(error) {
-    if(error) {
+    if (error) {
         console.log(error);
     } else {
         console.log('Connected to database: ' + name);
@@ -22,7 +22,7 @@ module.exports = subscriber;
 
 subscriber.new = function Insert(newData, callBack) {
     subscriber.subscribers.findOne({email: newData.email}, function(error,object) {
-        if(object) {
+        if (object) {
             callBack('Email already exist.');
         } else {
             subscriber.subscribers.insert(newData, callBack(null));
@@ -32,7 +32,7 @@ subscriber.new = function Insert(newData, callBack) {
 
 subscriber.list = function Show(callBack) {
     subscriber.subscribers.find().toArray(function(error,response) {
-        if(error) {
+        if (error) {
             callBack(error);
         } else {
             callBack(null, response);
