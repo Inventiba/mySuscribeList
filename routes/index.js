@@ -20,7 +20,7 @@ module.exports = function(app) {
     app.post('/save', function(request,response) {
         var fields= {name: request.param('name'), email:request.param('email'), id:request.param('id')};
         subscriberModule.edit(fields, function(objeto) {
-            if(objeto) {
+            if (objeto) {
                 response.redirect('/');
             } else {
                 response.send('update fail', 400);
@@ -30,7 +30,7 @@ module.exports = function(app) {
 
     app.post('/delete', function(request, response) {
         subscriberModule.delete(request.body.id, function(error,obj) {
-            if(!error) {
+            if (!error) {
                 response.send('ok', 200);
             } else {
                 response.send('subscriber does no exist', 400);
